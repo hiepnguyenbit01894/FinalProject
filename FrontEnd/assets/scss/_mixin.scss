@@ -1,0 +1,44 @@
+// mixin font
+
+@mixin fontInfor($fsize, $fweight) {
+    font-size: $fsize;
+    font-weight: $fweight;
+  }
+  
+  @mixin titleSpacing {
+    padding: 27px 0;
+    text-align: center;
+    .title {
+      @include inforTitle(40px, 500, 1.2, 1px);
+    }
+  }
+  
+  @mixin inforTitle($fsize, $fweight, $lheight, $lspacing) {
+    font-size: $fsize;
+    font-weight: $fweight;
+    line-height: $lheight;
+    letter-spacing: $lspacing;
+  }
+  
+  @mixin buttonCart {
+    display: inline-block;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 18px 65px;
+    border: none;
+    background: #83b735;
+    font-size: 14px;
+    text-align: center;
+    line-height: 24px;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    position: relative;
+    border-radius: 0;
+    transition: 0.3s;
+  
+    &:hover {
+      transition: 0.3s;
+      background-color: #111111;
+    }
+  }
+  
