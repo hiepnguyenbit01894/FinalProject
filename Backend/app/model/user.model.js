@@ -1,5 +1,6 @@
 const db = require('../common/connect')
 const helper = require('../common/helper')
+const bcrypt = require('bcrypt');
 
 const user = (user) => {
     this.id = user.id
@@ -29,18 +30,49 @@ user.userExists = (username) => {
     });
 };
 
-user.register = function (data, result) {
+user.register = function(data, result) {
     let timeToday = helper.getTimeCurrent()
     data.created_at = timeToday
     data.updated_at = timeToday
-    db.query("INSERT INTO users SET ?", data, function (err, user) {
+    bcrypt.hash(data.password, 10, (err, hash) => {
         if (err) {
-            result(null)
-        }
-        else {
-            result({ id: user.insertId, ...data })
+            return reject(error)
+        } else {
+            data.password = hash
+            db.query("INSERT INTO users SET ?", data, function(err, user) {
+                if (err) {
+                    result(null)
+                } else {
+                    result({ id: user.insertId, ...data })
+                }
+            })
         }
     })
+}
+
+user.login = function(data, result) {
+    db.query("SELECT * FROM users WHERE username = ? LIMIT 1", data.username, function(err, user) {
+        if (err) {
+            result(null)
+        } else {
+            let userCheck = user
+            if (userCheck.length > 0) {
+                const passwordIsValid = bcrypt.compareSync(
+                    data.password,
+                    userCheck[0].password
+                );
+                if (passwordIsValid) {
+                    result(user)
+                } else {
+                    result('Sai mật khẩu vui lòng kiểm tra lại')
+                }
+            } else {
+
+            }
+        }
+    })
+    console.log('bui anh tuans', data);
+
 }
 
 module.exports = user
