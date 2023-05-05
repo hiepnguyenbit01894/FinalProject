@@ -62,6 +62,7 @@ user.login = function(data, result) {
                     userCheck[0].password
                 );
                 if (passwordIsValid) {
+                    let reu
                     result(user)
                 } else {
                     result('Sai mật khẩu vui lòng kiểm tra lại')
