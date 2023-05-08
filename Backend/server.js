@@ -1,6 +1,6 @@
 /*
 Cài đặt server
-*/ 
+*/
 
 var express = require('express');
 var app = express();
@@ -11,7 +11,7 @@ var app = express();
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-// Cors: truy cập tài nguyên web trên các tên miền khác nhau
+    // Cors: truy cập tài nguyên web trên các tên miền khác nhau
 var cors = require('cors')
 
 app.use(cors());
@@ -21,7 +21,9 @@ let homeRouter = require('./app/routes/home.router')(app)
 
 let productRouter = require('./app/routes/product.router')(app)
 
-let userRouter =require('./app/routes/user.router')(app)
+let userRouter = require('./app/routes/user.router')(app)
+
+let orderRouter = require('./app/routes/order.router')(app)
 
 app.listen(2828, () => {
     console.log("Serve listening 2828");
