@@ -98,9 +98,10 @@ product.create = function(data, result) {
         let timeToday = helper.getTimeCurrent()
         data.created_at = timeToday
         data.updated_at = timeToday
-        db.query("INSERT INTO products SET ?", data, function(err, product) {
+        db.query("INSERT INTO products SET ?", [data], function(err, product) {
             if (err) {
                 result(null)
+                console.log('vádasdasd', err)
             } else {
                 result({ id: product.insertId, ...data })
             }
