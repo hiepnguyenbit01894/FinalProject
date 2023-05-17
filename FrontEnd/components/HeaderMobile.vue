@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="header-mobile">
-      <v-row no-gutters>
+      <v-row no-gutters class="align-center">
         <v-col cols="3">
           <div
             id="navigation-icon"
@@ -19,7 +19,7 @@
           <HeaderMobileLogoMobile></HeaderMobileLogoMobile>
         </v-col>
         <v-col cols="3">
-          <HeaderMobileCurrenciesMobile></HeaderMobileCurrenciesMobile>
+          <HeaderInnerCurrencies />
         </v-col>
       </v-row>
     </div>

@@ -12,9 +12,9 @@
         <div class="options">
           <ul class="options__inner d-flex justify-center">
             <li class="options__item">
-              <v-icon icon="mdi-more"></v-icon>
+              <v-icon @click="toDetail(item.id)" icon="mdi-more"></v-icon>
             </li>
-            <li @click="addtoCart" class="options__item">
+            <li @click="addtoCart(item)" class="options__item">
               <v-icon icon="mdi-cart"></v-icon>
             </li>
           </ul>
@@ -41,14 +41,22 @@ export default {
         `http://localhost:2828/product/list?page=${this.page}&page_size=${this.page_size}`
       )
       .then((res) => {
-        this.itemNew = res.data.result.splice(0,8);
+        this.itemNew = res.data.result.splice(0, 8);
       });
   },
   methods: {
-    addtoCart() {
-      // this.$store.commit("addtoCart")
-      // this.$store.dispatch("addtoCart",this.details)
-      console.log("11");
+    addtoCart(item) {
+      if (JSON.parse(localStorage.getItem("user")) == null) {
+        alert("You Must Login to Shopping");
+      } else {
+        alert("Add to cart success");
+        this.$store.dispatch("addtoCart", item);
+        console.log("Sell", item);
+      }
+    },
+    toDetail(param) {
+      console.log("asdasdasd;", param);
+      this.$router.push(`/product/${param}`);
     },
   },
 };

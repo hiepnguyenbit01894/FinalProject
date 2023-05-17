@@ -1,28 +1,52 @@
 <template>
   <div class="contentShop">
     <div class="contentShop__feature d-flex justify-space-between align-center">
-      <v-text-field
-        hide-details
-        @focus="searchClosed = false"
-        @blur="searchClosed = true"
-        label="Search.."
-        append-inner-icon="mdi-magnify"
-        class="search"
-        :class="{ closed: searchClosed }"
-        v-model="searchValue"
-      ></v-text-field>
-      <v-select
+      <v-container fluid>
+        <v-row>
+          <v-radio-group class="d-flex radioList" inline>
+            <v-radio
+              label="10.00$ - 30.00$"
+              value="1"
+              @change="check($event)"
+            ></v-radio>
+            <v-radio
+              label="30.00$ - 60.00$"
+              value="2"
+              @change="check($event)"
+            ></v-radio>
+            <v-radio
+              label="60.00$ - 90.00$"
+              value="3"
+              @change="check($event)"
+            ></v-radio>
+            <v-radio
+              label="90.00$ - "
+              value="4"
+              @change="check($event)"
+            ></v-radio>
+          </v-radio-group>
+        </v-row>
+      </v-container>
+      <!-- <v-select
         v-model="select"
         :hint="`${select.label}, ${select.value}`"
         :items="items1"
         item-title="label"
         item-value="value"
+        :on-change="test($event)"
         persistent-hint
         return-object
         single-line
-      ></v-select>
+        hide-details
+      ></v-select> -->
+      <select class="sort" name="cars" id="cars" @change="test($event)">
+        <option value="LH">Price:Low to High</option>
+        <option value="HL">Price:High to Low</option>
+        <option value="AZ">Name: Z-A</option>
+        <option value="ZA">Name: A-Z</option>
+      </select>
     </div>
-    <ul class="contentShop__Main" v-if="itemList.length">
+    <ul class="contentShop__Main">
       <li v-for="item in itemList" :key="item.id" class="contentShop__item">
         <div class="image">
           <img :src="item.link_image" alt="" />
@@ -34,7 +58,7 @@
         <div class="options">
           <ul class="options__inner d-flex justify-center">
             <li class="options__item">
-              <v-icon icon="mdi-more"></v-icon>
+              <v-icon @click="toDetail(item.id)" icon="mdi-more"></v-icon>
             </li>
             <li @click="addtoCart(item)" class="options__item">
               <v-icon icon="mdi-cart"></v-icon>
@@ -43,10 +67,6 @@
         </div>
       </li>
     </ul>
-    <div v-else class="notfound text-center">
-      <img src="../../../assets/image/no-prd.jpg" alt="" />
-      <h4>No Product Found!</h4>
-    </div>
     <v-pagination v-model="page" :length="totalPages"></v-pagination>
   </div>
 </template>
@@ -59,6 +79,10 @@ export default {
 
   data() {
     return {
+      selectedValue: "",
+      taskTime: null,
+      from: 0,
+      to: 0,
       page: 1,
       page_size: 8,
       totalPages: 0,
@@ -73,7 +97,6 @@ export default {
         { label: "Name: A-Z", value: 3 },
         { label: "Name: Z-A", value: 4 },
       ],
-
       filter: [],
       searchClosed: true,
     };
@@ -85,17 +108,17 @@ export default {
       this.getAll();
     },
   },
-  created() {
-    this.updatePage();
-  },
+
   mounted() {
     this.getAll();
   },
   methods: {
     getAll() {
+      console.log("this.from", this.from);
+      console.log("this.to", this.to);
       axios
         .get(
-          `http://localhost:2828/product/list?page=${this.page}&page_size=${this.page_size}&sort=${this.sort}&params_short=${this.params_sort}`
+          `http://localhost:2828/product/list?page=${this.page}&page_size=${this.page_size}&sort=${this.sort}&params_sort=${this.params_sort}&from=${this.from}&to=${this.to}`
         )
         .then((res) => {
           this.items = res.data.result;
@@ -103,13 +126,69 @@ export default {
         });
     },
     addtoCart(item) {
-      // this.$store.commit("addtoCart")
-      this.$store.dispatch("addtoCart", item);
+      if (JSON.parse(localStorage.getItem("user")) == null) {
+        alert("You Must Login to Shopping");
+      } else {
+        alert("Add to cart success");
+        this.$store.dispatch("addtoCart", item);
+        console.log("Sell", item);
+      }
     },
-    updatePage() {
-      console.log(123132132);
+
+    toDetail(param) {
+      this.$router.push(`/product/${param}`);
     },
-    
+    reset() {
+      (this.selectedValue = ""),
+        (this.from = 0),
+        (this.to = 0),
+        (this.page = 1),
+        (this.sort = 0),
+        (this.params_sort = "ASC"),
+        (this.searchValue = ""),
+        (this.select = { label: "", value: "" });
+    },
+    test($event) {
+      console.log("asdfadsf");
+      console.log($event.target.value);
+      this.reset();
+      let value = $event.target.value;
+      if (value == "HL") {
+        this.sort = 1;
+        this.params_sort = "DESC";
+      } else if (value == "LH") {
+        this.sort = 1;
+        this.params_sort = "ASC";
+      } else if (value == "AZ") {
+        this.sort = 2;
+        this.params_sort = "DESC";
+      } else {
+        this.sort = 2;
+        this.params_sort = "ASC";
+      }
+      this.getAll();
+
+      console.log();
+    },
+    check($event) {
+      console.log($event.target.value);
+      let val = $event.target.value;
+      this.sort = 1;
+      if (val == 1) {
+        this.from = 10;
+        this.to = 30;
+      } else if (val == 2) {
+        this.from = 30;
+        this.to = 60;
+      } else if (val == 3) {
+        this.from = 60;
+        this.to = 90;
+      } else {
+        this.from = 90;
+        this.to = 300;
+      }
+      this.getAll();
+    },
   },
   computed: {
     itemList() {
@@ -125,7 +204,6 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 @import "../../../assets/scss/mixin";
 @import "../../../assets/scss/variables";

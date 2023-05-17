@@ -3,7 +3,7 @@
     <div class="banner__inner">
       <h2>Products</h2>
       <span>Home</span>
-      <i class="bi bi-arrow-right"></i>
+      <v-icon icon="mdi-arrow-right"></v-icon>
       <span>Blogs</span>
     </div>
   </div>

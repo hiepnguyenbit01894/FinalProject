@@ -40,7 +40,7 @@
         <div class="options">
           <ul class="options__inner d-flex justify-center">
             <li class="options__item">
-              <v-icon icon="mdi-more"></v-icon>
+              <v-icon @click="toDetail(item.id)" icon="mdi-more"></v-icon>
             </li>
             <li @click="addtoCart(item)" class="options__item">
               <v-icon icon="mdi-cart"></v-icon>
@@ -72,19 +72,29 @@ export default {
     page: 2,
     page_size: 12,
   }),
+  
   mounted() {
     axios
       .get(
         `http://localhost:2828/product/list?page=${this.page}&page_size=${this.page_size}`
       )
       .then((res) => {
-        this.slideItem = res.data.result.splice(0,7);
+        this.slideItem = res.data.result.splice(0, 7);
       });
   },
   methods: {
     addtoCart(item) {
-      // this.$store.commit("addtoCart")
-      this.$store.dispatch("addtoCart", item);
+      if (JSON.parse(localStorage.getItem("user")) == null) {
+        alert("You Must Login to Shopping");
+      } else {
+        alert("Add to cart success");
+        this.$store.dispatch("addtoCart", item);
+        console.log("Sell", item);
+      }
+    },
+    toDetail(param) {
+      console.log("asdasdasd;", param);
+      this.$router.push(`/product/${param}`);
     },
   },
   components: {

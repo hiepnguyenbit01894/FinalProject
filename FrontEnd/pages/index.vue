@@ -11,5 +11,6 @@
       <BodyHomeBodyImagePage></BodyHomeBodyImagePage>
       <!-- Latest New -->
       <BodyHomeBodyLatest></BodyHomeBodyLatest>
+      
   </div>
 </template>

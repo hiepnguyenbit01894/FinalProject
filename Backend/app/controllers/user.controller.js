@@ -27,3 +27,9 @@ exports.login = async function(req, res) {
         })
     })
 }
+// Get All
+exports.getUsers =  function(req,res){
+    user.getUsers(req,function(respone){
+        res.send(respone)
+    })
+}

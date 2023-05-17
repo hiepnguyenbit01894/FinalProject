@@ -26,9 +26,7 @@
       </v-form>
     </v-col>
     <v-spacer></v-spacer>
-    <v-btn>
-      <v-icon class="mr-1" style="cursor: pointer">mdi-bell</v-icon>
-    </v-btn>
+    
     <v-btn>
       <span>Logout</span>
       <v-icon icon="mdi-logout"></v-icon>
@@ -42,6 +40,9 @@ export default {
   data() {
     return {};
   },
+  methods:{
+    
+  }
 };
 </script>
 

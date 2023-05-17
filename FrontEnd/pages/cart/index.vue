@@ -2,6 +2,8 @@
 <template>
     <div class="cart">
         <!-- content Cart -->
-        <!-- <BodyCartContent></BodyCartContent> -->
+        <v-container>
+            <BodyCartContent></BodyCartContent>
+        </v-container>
     </div>
 </template>

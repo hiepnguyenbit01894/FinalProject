@@ -11,13 +11,13 @@ var app = express();
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-    // Cors: truy cập tài nguyên web trên các tên miền khác nhau
+// Cors: truy cập tài nguyên web trên các tên miền khác nhau
 var cors = require('cors')
 
 app.use(cors());
 // Tạo router và khai báo cổng cho app
 
-let homeRouter = require('./app/routes/home.router')(app)
+let statistic = require('./app/routes/statistic.router')(app)
 
 let productRouter = require('./app/routes/product.router')(app)
 

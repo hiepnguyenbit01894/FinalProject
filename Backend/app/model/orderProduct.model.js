@@ -52,7 +52,6 @@ orderProduct.createOrder = function(data, result) {
                         } else {
                             dataProduct.quantity = 0
                         }
-                        console.log('vao kokok123123', order.insertId)
                         let bodyOrderProduct = {
                             'order_id': order.insertId,
                             'product_id': element.id,

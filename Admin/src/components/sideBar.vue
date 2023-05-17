@@ -31,23 +31,19 @@ export default {
   data() {
     return {
       links: [
-        { icon: "mdi-microsoft-windows", title: "Dashboard", route: "/" },
-        { icon: "mdi-account", title: "profile", route: "/profile" },
+        { icon: "mdi-microsoft-windows", title: "Dashboard", route: "/dashboard" },
+        { icon: "mdi-account", title: "Profiles", route: "/profile" },
         {
           icon: "mdi-clipboard-list-outline",
-          title: "products",
+          title: "Products",
           route: "/products",
         },
         {
           icon: "mdi-clipboard-list",
-          title: "order",
+          title: "Order",
           route: "/order",
         },
-        {
-          icon: "mdi-cog-outline",
-          title: "Setting",
-          route: "/setting",
-        },
+        
       ],
     };
   },
@@ -61,6 +57,7 @@ export default {
       },
     },
   },
+  
 };
 </script>
 

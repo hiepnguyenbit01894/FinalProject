@@ -75,4 +75,16 @@ user.login = function(data, result) {
 
 }
 
+user.getUsers =function(data,result){
+    db.query("SELECT * FROM users",data,function(err,user){
+        if(err)
+        {
+            console.log(err);
+        }
+        else{
+            console.log("asdfadfdasf");
+            result(user)
+        }
+    })
+}
 module.exports = user

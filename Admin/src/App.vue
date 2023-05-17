@@ -1,7 +1,5 @@
 <template>
   <v-app id="inspire">
-    <SideBar :drawer="drawer" />
-    <Header @handleDrawer="drawer = !drawer"></Header>
     <v-main>
       <v-container class="py-8 px-6" fluid>
         <router-view></router-view>
@@ -11,14 +9,20 @@
 </template>
 
 <script>
-import Header from "./components/Header.vue";
-import SideBar from "./components/sideBar.vue";
+// import Header from "./components/Header.vue";
+// import SideBar from "./components/sideBar.vue";
 export default {
-  components: { Header, SideBar },
+  components: { },
   data: () => ({
     cards: ["Today", "Yesterday"],
     drawer: false,
+    
   }),
+
+  
+  methods: {
+    
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <v-container>
-      <v-row no-gutters>
+      <v-row no-gutters class="align-center">
         <v-col lg="3">
           <HeaderInnerLogo />
         </v-col>

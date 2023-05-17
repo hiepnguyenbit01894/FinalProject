@@ -4,7 +4,7 @@ var product = require('../model/product.model')
 
 // lấy toàn bộ sản phẩm 
 exports.getProducts = function(req, res) {
-        product.getAll(req.query.page, req.query.page_size, req.query.sort, req.query.params_sort, function(respone) {
+        product.getAll(req.query.page, req.query.page_size, req.query.sort, req.query.params_sort,req.query.from,req.query.to, function(respone) {
             res.send({ result: respone, totalPage: respone.totalPage, total: respone.total })
         })
     }
